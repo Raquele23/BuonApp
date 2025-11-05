@@ -21,8 +21,8 @@ class MesaController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'numero' => 'required|numeric|unique:mesas,numero',
-            'capacidade' => 'required|numeric',
+            'numero' => 'required|integer|unique:mesas,numero',
+            'capacidade' => 'required|integer',
             'status' => 'required|string|max:255',
         ], [
             'numero.unique' => 'Já existe uma mesa com esse número.',
@@ -41,8 +41,8 @@ class MesaController extends Controller
     public function update(Request $request, Mesa $mesa)
     {
         $validated = $request->validate([
-            'numero' => 'required|numeric|unique:mesas,numero,' . $mesa->id,
-            'capacidade' => 'required|numeric',
+            'numero' => 'required|integer|unique:mesas,numero,' . $mesa->id,
+            'capacidade' => 'required|integer',
             'status' => 'required|string|max:255',
         ], [
             'numero.unique' => 'Já existe uma mesa com esse número.',
