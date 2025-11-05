@@ -8,7 +8,7 @@
 <body>
     <h1>Adicionar Novo Prato</h1>
 
-    <form action="{{ route('pratos.store') }}" method="POST">
+    <form action="{{ route('pratos.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <p>
             <label>Nome:</label><br>
@@ -21,6 +21,10 @@
         <p>
             <label>Preço:</label><br>
             <input type="number" step="0.01" name="preco" value="{{ old('preco') }}" required>
+        </p>
+        <p>
+            <label>Imagem:</label><br>
+            <input type="file" name="imagem" accept="image/*">
         </p>
         
         <button type="submit">Salvar</button>
