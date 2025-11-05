@@ -24,7 +24,13 @@ class PratoController extends Controller
             'nome' => 'required|string|max:255',
             'descricao' => 'nullable|string',
             'preco' => 'required|numeric',
+            'imagem' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
         ]);
+
+        if ($request->hasFile('imagem')) {
+            $path = $request->file('imagem')->store('pratos', 'public');
+            $validated['imagem'] = $path;
+        }
 
         Prato::create($validated);
 
@@ -42,7 +48,17 @@ class PratoController extends Controller
             'nome' => 'required|string|max:255',
             'descricao' => 'nullable|string',
             'preco' => 'required|numeric',
+            'imagem' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
         ]);
+
+        if ($request->hasFile('imagem')) {
+            if ($prato->imagem && \Storage::disk('public')->exists($prato->imagem)) {
+            \Storage::disk('public')->delete($prato->imagem);
+        }
+
+            $path = $request->file('imagem')->store('pratos', 'public');
+            $validated['imagem'] = $path;
+    }
 
         $prato->update($validated);
 
