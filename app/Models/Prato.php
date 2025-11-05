@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class Prato extends Model
 {
-    protected $fillable = ['nome','descricao','preco'];
+    protected $fillable = ['nome','descricao','preco', 'imagem'];
 }
