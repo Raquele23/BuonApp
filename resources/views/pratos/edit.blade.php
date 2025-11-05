@@ -10,7 +10,7 @@
 
     <a href="{{ route('pratos.index') }}">Voltar para o cardápio</a>
 
-    <form action="{{ route('pratos.update', $prato->id) }}" method="POST">
+    <form action="{{ route('pratos.update', $prato->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         <p>
@@ -25,6 +25,15 @@
             <label>Preço:</label><br>
             <input type="number" step="0.01" name="preco" value="{{ old('preco', $prato->preco) }}" required>
         </p>
+        <p>
+            <label>Nova imagem:</label><br>
+            <input type="file" name="imagem" accept="image/*">
+        </p>
+
+        @if ($prato->imagem)
+            <p>Imagem atual:</p>
+            <img src="{{ asset('storage/' . $prato->imagem) }}" width="150">
+        @endif
         
         <button type="submit">Atualizar</button>
     </form>
