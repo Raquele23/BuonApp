@@ -27,7 +27,12 @@
         </p>
         <p>
             <label>Status:</label><br>
-            <input type="text" name="status" value="{{ old('status', $mesa->status) }}" required>
+            <select name="status" required>
+                <option value="">Selecione o status</option>
+                <option value="Disponível" {{ old('status', $mesa->status) == 'Disponível' ? 'selected' : '' }}>Disponível</option>
+                <option value="Ocupada" {{ old('status', $mesa->status) == 'Ocupada' ? 'selected' : '' }}>Ocupada</option>
+                <option value="Reservada" {{ old('status', $mesa->status) == 'Reservada' ? 'selected' : '' }}>Reservada</option>
+            </select>
         </p>
         
         <button type="submit">Atualizar</button>
