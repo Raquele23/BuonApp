@@ -14,34 +14,30 @@
         <p>{{ session('success') }}</p>
     @endif
 
-    <table border="1" cellpadding="5" cellspacing="0">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nome</th>
-                <th>Descrição</th>
-                <th>Preço</th>
-                <th>Ações</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($pratos as $prato)
-                <tr>
-                    <td>{{ $prato->id }}</td>
-                    <td>{{ $prato->nome }}</td>
-                    <td>{{ $prato->descricao }}</td>
-                    <td>{{ $prato->preco }}</td>
-                    <td>
+    <div style="display: flex; flex-wrap: wrap; gap: 20px;">
+        @foreach($pratos as $prato)
+            <div>
+                @if ($prato->imagem)
+                    <img src="{{ asset('storage/' . $prato->imagem) }}" alt="{{ $prato->nome }}" width="200">
+                @endif
+
+                <p><strong>Nome:</strong> {{ $prato->nome }}</p>
+                <p><strong>Descrição:</strong> {{ $prato->descricao }}</p>
+                <p><strong>Preço:</strong> R$ {{ number_format($prato->preco, 2, ',', '.') }}</p>
+
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <p>
                         <a href="{{ route('pratos.edit', $prato->id) }}">Editar</a>
-                        <form action="{{ route('pratos.destroy', $prato->id) }}" method="POST" style="display:inline">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" onclick="return confirm('Tem certeza?')">Deletar</button>
-                        </form>
-                    </td>
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
+                    </p>
+
+                    <form action="{{ route('pratos.destroy', $prato->id) }}" method="POST" style="display:inline">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" onclick="return confirm('Tem certeza?')">Deletar</button>
+                    </form>
+                </div>
+            </div>
+        @endforeach
+    </div>
 </body>
 </html>
