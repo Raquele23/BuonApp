@@ -23,6 +23,17 @@
             <input type="number" step="0.01" name="preco" value="{{ old('preco') }}" required>
         </p>
         <p>
+            <label>Categoria:</label><br>
+            <select name="categoria_id" required>
+                <option value="">Selecione uma categoria</option>
+                @foreach($categorias as $categoria)
+                    <option value="{{ $categoria->id }}" {{ old('categoria_id') == $categoria->id ? 'selected' : '' }}>
+                        {{ $categoria->nome }}
+                    </option>
+                @endforeach
+            </select>
+        </p>
+        <p>
             <label>Imagem:</label><br>
             <input type="file" name="imagem" accept="image/*">
         </p>

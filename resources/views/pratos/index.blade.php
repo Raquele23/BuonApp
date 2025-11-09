@@ -24,6 +24,8 @@
                 <p><strong>Nome:</strong> {{ $prato->nome }}</p>
                 <p><strong>Descrição:</strong> {{ $prato->descricao }}</p>
                 <p><strong>Preço:</strong> R$ {{ number_format($prato->preco, 2, ',', '.') }}</p>
+                <p><strong>Categoria:</strong> {{ $prato->categoria->nome ?? 'Sem categoria' }}</p>
+
 
                 <div style="display: flex; align-items: center; gap: 10px;">
                     <p>
