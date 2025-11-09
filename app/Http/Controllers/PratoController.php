@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Prato;
+use App\Models\Categoria;
 use Illuminate\Http\Request;
 
 class PratoController extends Controller
@@ -15,7 +16,8 @@ class PratoController extends Controller
 
     public function create()
     {
-        return view('pratos.create');
+        $categorias = Categoria::all();
+        return view('pratos.create', compact('categorias'));
     }
 
     public function store(Request $request)
@@ -25,6 +27,7 @@ class PratoController extends Controller
             'descricao' => 'nullable|string',
             'preco' => 'required|numeric',
             'imagem' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
+            'categoria_id' => 'required|exists:categorias,id',
         ]);
 
         if ($request->hasFile('imagem')) {
@@ -39,7 +42,8 @@ class PratoController extends Controller
 
     public function edit(Prato $prato)
     {
-        return view('pratos.edit', compact('prato'));
+        $categorias = Categoria::all();
+        return view('pratos.edit', compact('prato', 'categorias'));
     }
 
     public function update(Request $request, Prato $prato)
@@ -49,6 +53,7 @@ class PratoController extends Controller
             'descricao' => 'nullable|string',
             'preco' => 'required|numeric',
             'imagem' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
+            'categoria_id' => 'required|exists:categorias,id',
         ]);
 
         if ($request->hasFile('imagem')) {
