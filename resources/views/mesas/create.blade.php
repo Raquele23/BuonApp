@@ -1,42 +1,55 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastrar mesa</title>
-</head>
-<body>
-    <h1>Cadastrar mesa</h1>
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-green-700 dark:text-green-400 leading-tight border-l-4 border-red-600 dark:border-red-500 pl-3">Cadastrar Mesa</h2>
+    </x-slot>
 
-    @error('numero')
-        <div style="color: red; margin-top: 4px;">
-            {{ $message }}
+    <div class="py-10">
+        <div class="max-w-xl mx-auto sm:px-6 lg:px-8">
+
+            <div class="bg-white dark:bg-gray-800 shadow-xl sm:rounded-lg p-8">
+
+                <h1 class="text-2xl font-bold text-green-700 dark:text-green-400 mb-6">Nova Mesa</h1>
+
+                @if ($errors->any())
+                    <div class="mb-4 p-4 bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-300 border-l-4 border-red-600 dark:border-red-500 rounded">
+                        <ul class="list-disc ml-6">
+                            @foreach ($errors->all() as $erro)
+                                <li>{{ $erro }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+
+                <form action="{{ route('mesas.store') }}" method="POST" class="space-y-6">
+                    @csrf
+
+                    <div>
+                        <label class="block font-semibold text-gray-700 dark:text-gray-200">Número da mesa:</label>
+                        <input type="number" name="numero" value="{{ old('numero') }}" required class="w-full mt-1 px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 border border-gray-300 dark:border-gray-600 focus:ring-green-600 focus:border-green-600">
+                    </div>
+
+                    <div>
+                        <label class="block font-semibold text-gray-700 dark:text-gray-200">Capacidade:</label>
+                        <input type="number" name="capacidade" value="{{ old('capacidade') }}" required class="w-full mt-1 px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 border border-gray-300 dark:border-gray-600 focus:ring-green-600 focus:border-green-600">
+                    </div>
+
+                    <div>
+                        <label class="block font-semibold text-gray-700 dark:text-gray-200">Status:</label>
+                        <select name="status" required class="w-full mt-1 px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 border border-gray-300 dark:border-gray-600 focus:ring-green-600 focus:border-green-600">
+                            <option value="">Selecione o status</option>
+                            <option value="Disponível" {{ old('status') == 'Disponível' ? 'selected' : '' }}>Disponível</option>
+                            <option value="Ocupada" {{ old('status') == 'Ocupada' ? 'selected' : '' }}>Ocupada</option>
+                            <option value="Reservada" {{ old('status') == 'Reservada' ? 'selected' : '' }}>Reservada</option>
+                        </select>
+                    </div>
+
+                    <div class="flex justify-between pt-4">
+                        <a href="{{ route('mesas.index') }}" class="px-5 py-2 rounded-lg bg-gray-300 dark:bg-gray-600 text-gray-900 dark:text-gray-100 hover:bg-gray-400 dark:hover:bg-gray-500 transition">Voltar</a>
+
+                        <button type="submit" class="px-5 py-2 rounded-lg bg-green-600 dark:bg-green-700 text-white hover:bg-green-700 dark:hover:bg-green-800 transition">Salvar</button>
+                    </div>
+                </form>
+            </div>
         </div>
-    @enderror
-
-    <form action="{{ route('mesas.store') }}" method="POST">
-        @csrf
-        <p>
-            <label>Número da mesa:</label><br>
-            <input type="number" name="numero" value="{{ old('numero') }}" required>
-        </p>
-        <p>
-            <label>Capacidade:</label><br>
-            <input type="number" name="capacidade" value="{{ old('capacidade') }}" required>
-        </p>
-        <p>
-            <label>Status:</label><br>
-            <select name="status" required>
-                <option value="">Selecione o status</option>
-                <option value="Disponível" {{ old('status') == 'Disponível' ? 'selected' : '' }}>Disponível</option>
-                <option value="Ocupada" {{ old('status') == 'Ocupada' ? 'selected' : '' }}>Ocupada</option>
-                <option value="Reservada" {{ old('status') == 'Reservada' ? 'selected' : '' }}>Reservada</option>
-            </select>
-        </p>
-        
-        <button type="submit">Salvar</button>
-    </form>
-
-    <a href="{{ route('mesas.index') }}">Voltar</a>
-</body>
-</html>
+    </div>
+</x-app-layout>
