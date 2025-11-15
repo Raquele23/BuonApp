@@ -1,43 +1,67 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Categorias</title>
-</head>
-<body>
-    <h1>Categorias</h1>
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-green-700 dark:text-green-400 leading-tight border-l-4 border-red-600 dark:border-red-500 pl-3"> {{ __('Categorias') }} </h2>
+    </x-slot>
 
-    <a href="{{ route('categorias.create') }}">Nova Categoria</a>
+    <div class="py-8">
+        <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
 
-    @if(session('success'))
-        <p>{{ session('success') }}</p>
-    @endif
+            <div class="bg-white dark:bg-gray-800 shadow-xl sm:rounded-lg p-6">
 
-    <table border="1" cellpadding="5" cellspacing="0">
-        <thead>
-            <tr>
-                <th>Nome</th>
-                <th>Descrição</th>
-                <th>Ações</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($categorias as $categoria)
-                <tr>
-                    <td>{{ $categoria->nome }}</td>
-                    <td>{{ $categoria->descricao }}</td>
-                    <td>
-                        <a href="{{ route('categorias.edit', $categoria->id) }}">Editar</a>
-                        <form action="{{ route('categorias.destroy', $categoria->id) }}" method="POST" style="display:inline;">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" onclick="return confirm('Tem certeza?')">Excluir</button>
-                        </form>
-                    </td>
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
-</body>
-</html>
+                <div class="flex justify-between mb-6">
+                    <h1 class="text-2xl font-bold text-green-700 dark:text-green-400">
+                        Lista de Categorias
+                    </h1>
+
+                    <a href="{{ route('categorias.create') }}"
+                       class="bg-green-600 dark:bg-green-700 text-white px-4 py-2 rounded-lg hover:bg-green-700 dark:hover:bg-green-800 transition">
+                        Nova Categoria
+                    </a>
+                </div>
+
+                @if(session('success'))
+                    <div class="mb-4 p-3 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-300 border-l-4 border-green-600 dark:border-green-500 rounded">
+                        {{ session('success') }}
+                    </div>
+                @endif
+
+                <div class="overflow-x-auto">
+                    <table class="w-full border-collapse bg-white dark:bg-gray-800 shadow-md dark:shadow-lg rounded-lg overflow-hidden">
+                        <thead class="bg-red-600 dark:bg-red-700 text-white">
+                            <tr>
+                                <th class="px-4 py-3 text-left">Nome</th>
+                                <th class="px-4 py-3 text-left">Descrição</th>
+                                <th class="px-4 py-3 text-center">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($categorias as $categoria)
+                            <tr class="border-b border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 transition">
+                                <td class="px-4 py-3 text-gray-900 dark:text-gray-100">
+                                    {{ $categoria->nome }}
+                                </td>
+                                <td class="px-4 py-3 text-gray-700 dark:text-gray-300">
+                                    {{ $categoria->descricao }}
+                                </td>
+                                <td class="px-4 py-3 text-center space-x-2">
+
+                                    <a href="{{ route('categorias.edit', $categoria->id) }}" class="bg-green-500 dark:bg-green-600 hover:bg-green-600 dark:hover:bg-green-700 text-white px-3 py-1 rounded">
+                                        Editar
+                                    </a>
+
+                                    <form action="{{ route('categorias.destroy', $categoria->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Tem certeza que deseja excluir?')">
+                                        @csrf
+                                        @method('DELETE')
+
+                                        <button type="submit" class="bg-red-600 dark:bg-red-700 hover:bg-red-700 dark:hover:bg-red-800 text-white px-3 py-1 rounded"> Excluir </button>
+                                    </form>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</x-app-layout>

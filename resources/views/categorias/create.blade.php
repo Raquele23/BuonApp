@@ -1,26 +1,37 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nova categoria</title>
-</head>
-<body>
-    <h1>Nova Categoria</h1>
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-green-700 dark:text-green-400 leading-tight border-l-4 border-red-600 dark:border-red-500 pl-3">Nova Categoria</h2>
+    </x-slot>
 
-    <form action="{{ route('categorias.store') }}" method="POST">
-        @csrf
-        <p>
-            <label>Nome:</label><br>
-            <input type="text" name="nome" value="{{ old('nome') }}" required>
-        </p>
-        <p>
-            <label>Descrição:</label><br>
-            <textarea name="descricao">{{ old('descricao') }}</textarea>
-        </p>
-        <button type="submit">Salvar</button>
-    </form>
+    <div class="py-10">
+        <div class="max-w-xl mx-auto sm:px-6 lg:px-8">
 
-    <a href="{{ route('categorias.index') }}">Voltar</a>
-</body>
-</html>
+            <div class="bg-white dark:bg-gray-800 shadow-xl sm:rounded-lg p-6">
+
+                <h1 class="text-2xl font-bold mb-6 text-green-700 dark:text-green-400">
+                    Criar Nova Categoria
+                </h1>
+
+                <form action="{{ route('categorias.store') }}" method="POST">
+                    @csrf
+
+                    <div class="mb-4">
+                        <label class="block text-gray-700 dark:text-gray-300 font-semibold">Nome:</label>
+                        <input type="text" name="nome" value="{{ old('nome') }}" required class="w-full mt-1 p-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-200 border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-green-600 dark:focus:ring-green-500">
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="block text-gray-700 dark:text-gray-300 font-semibold">Descrição:</label>
+                        <textarea name="descricao"class="w-full mt-1 p-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-200 border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-green-600 dark:focus:ring-green-500" rows="4">{{ old('descricao') }}</textarea>
+                    </div>
+
+                    <div class="flex justify-between mt-6">
+                        <a href="{{ route('categorias.index') }}" class="bg-gray-300 dark:bg-gray-700 text-gray-800 dark:text-gray-200 px-4 py-2 rounded-lg hover:bg-gray-400 dark:hover:bg-gray-600 transition">Voltar</a>
+
+                        <button type="submit" class="bg-green-600 dark:bg-green-700 text-white px-4 py-2 rounded-lg hover:bg-green-700 dark:hover:bg-green-800 transition">Salvar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</x-app-layout>
