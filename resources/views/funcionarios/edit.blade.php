@@ -1,45 +1,65 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar funcionário</title>
-</head>
-<body>
-    <h1>Editar funcionário</h1>
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-green-700 dark:text-green-400 leading-tight border-l-4 border-red-600 dark:border-red-500 pl-3">Editar Funcionário</h2>
+    </x-slot>
 
-    <form action="{{ route('funcionarios.update', $funcionario->id) }}" method="POST">
-        @csrf
-        @method('PUT')
-        <p>
-            <label>Nome:</label><br>
-            <input type="text" name="nome" value="{{ old('nome', $funcionario->nome) }}" required>
-        </p>
-        <p>
-            <label>Email:</label><br>
-            <input type="email" name="email" value="{{ old('email', $funcionario->email) }}" required>
-        </p>
-        <p>
-            <label>Telefone:</label><br>
-            <input type="text" name="telefone" value="{{ old('telefone', $funcionario->telefone) }}" required>
-        </p>
-        <p>
-            <label>Cargo:</label><br>
-            <select name="cargo" required>
-                <option value="">Selecione o cargo</option>
-                <option value="Chef de Cozinha" {{ old('cargo', $funcionario->cargo) == 'Chef de Cozinha' ? 'selected' : '' }}>Chef de Cozinha</option>
-                <option value="Cozinheiro" {{ old('cargo', $funcionario->cargo) == 'Cozinheiro' ? 'selected' : '' }}>Cozinheiro</option>
-                <option value="Pizzaiolo" {{ old('cargo', $funcionario->cargo) == 'Pizzaiolo' ? 'selected' : '' }}>Pizzaiolo</option>
-                <option value="Garçom" {{ old('cargo', $funcionario->cargo) == 'Garçom' ? 'selected' : '' }}>Garçom</option>
-                <option value="Sommelier" {{ old('cargo', $funcionario->cargo) == 'Sommelier' ? 'selected' : '' }}>Sommelier</option>
-                <option value="Gerente" {{ old('cargo', $funcionario->cargo) == 'Gerente' ? 'selected' : '' }}>Gerente</option>
-                <option value="Atendente" {{ old('cargo', $funcionario->cargo) == 'Atendente' ? 'selected' : '' }}>Atendente</option>
-            </select>
-        </p>
-        
-        <button type="submit">Atualizar</button>
-    </form>
+    <div class="py-10">
+        <div class="max-w-xl mx-auto sm:px-6 lg:px-8">
 
-     <a href="{{ route('funcionarios.index') }}">Voltar</a>
-</body>
-</html>
+            <div class="bg-white dark:bg-gray-800 shadow-xl sm:rounded-lg p-8">
+
+                <h1 class="text-2xl font-bold text-green-700 dark:text-green-400 mb-6">Alterar dados do Funcionário</h1>
+
+                @if ($errors->any())
+                    <div class="mb-4 p-4 bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-300 border-l-4 border-red-600 dark:border-red-500 rounded">
+                        <ul class="list-disc ml-6">
+                            @foreach ($errors->all() as $erro)
+                                <li>{{ $erro }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+
+                <form action="{{ route('funcionarios.update', $funcionario->id) }}" method="POST" class="space-y-6">
+                    @csrf
+                    @method('PUT')
+
+                    <div>
+                        <label class="block font-semibold text-gray-700 dark:text-gray-200">Nome:</label>
+                        <input type="text" name="nome" value="{{ old('nome', $funcionario->nome) }}" required class="w-full mt-1 px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 border border-gray-300 dark:border-gray-600 focus:ring-green-600 focus:border-green-600">
+                    </div>
+
+                    <div>
+                        <label class="block font-semibold text-gray-700 dark:text-gray-200">Email:</label>
+                        <input type="email" name="email" value="{{ old('email', $funcionario->email) }}" required class="w-full mt-1 px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-700  text-gray-900 dark:text-gray-100 border border-gray-300 dark:border-gray-600 focus:ring-green-600 focus:border-green-600">
+                    </div>
+
+                    <div>
+                        <label class="block font-semibold text-gray-700 dark:text-gray-200">Telefone:</label>
+                        <input type="text" name="telefone" value="{{ old('telefone', $funcionario->telefone) }}" required class="w-full mt-1 px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 border border-gray-300 dark:border-gray-600 focus:ring-green-600 focus:border-green-600">
+                    </div>
+
+                    <div>
+                        <label class="block font-semibold text-gray-700 dark:text-gray-200">Cargo:</label>
+                        <select name="cargo" required class="w-full mt-1 px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 border border-gray-300 dark:border-gray-600 focus:ring-green-600 focus:border-green-600">
+                            <option value="">Selecione o cargo</option>
+                            <option value="Chef de Cozinha" {{ old('cargo', $funcionario->cargo) == 'Chef de Cozinha' ? 'selected' : '' }}>Chef de Cozinha</option>
+                            <option value="Cozinheiro" {{ old('cargo', $funcionario->cargo) == 'Cozinheiro' ? 'selected' : '' }}>Cozinheiro</option>
+                            <option value="Pizzaiolo" {{ old('cargo', $funcionario->cargo) == 'Pizzaiolo' ? 'selected' : '' }}>Pizzaiolo</option>
+                            <option value="Garçom" {{ old('cargo', $funcionario->cargo) == 'Garçom' ? 'selected' : '' }}>Garçom</option>
+                            <option value="Sommelier" {{ old('cargo', $funcionario->cargo) == 'Sommelier' ? 'selected' : '' }}>Sommelier</option>
+                            <option value="Gerente" {{ old('cargo', $funcionario->cargo) == 'Gerente' ? 'selected' : '' }}>Gerente</option>
+                            <option value="Atendente" {{ old('cargo', $funcionario->cargo) == 'Atendente' ? 'selected' : '' }}>Atendente</option>
+                        </select>
+                    </div>
+
+                    <div class="flex justify-between pt-4">
+                        <a href="{{ route('funcionarios.index') }}" class="px-5 py-2 rounded-lg bg-gray-300 dark:bg-gray-600 text-gray-900 dark:text-gray-100 hover:bg-gray-400 dark:hover:bg-gray-500 transition">Voltar</a>
+
+                        <button type="submit" class="px-5 py-2 rounded-lg bg-green-600 dark:bg-green-700 text-white hover:bg-green-700 dark:hover:bg-green-800 transition">Atualizar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</x-app-layout>
