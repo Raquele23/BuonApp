@@ -15,6 +15,26 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+
+                    <x-nav-link :href="route('categorias.index')" :active="request()->routeIs('categorias.*')">
+                        Categorias
+                    </x-nav-link>
+
+                    <x-nav-link :href="route('pratos.index')" :active="request()->routeIs('pratos.*')">
+                        Pratos
+                    </x-nav-link>
+
+                    <x-nav-link :href="route('mesas.index')" :active="request()->routeIs('mesas.*')">
+                        Mesas
+                    </x-nav-link>
+
+                    <x-nav-link :href="route('funcionarios.index')" :active="request()->routeIs('funcionarios.*')">
+                        Funcionários
+                    </x-nav-link>
+
+                    <x-nav-link :href="route('pedidos.index')" :active="request()->routeIs('pedidos.*')">
+                        Pedidos
+                    </x-nav-link>
                 </div>
             </div>
 
