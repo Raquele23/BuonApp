@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Categoria;
 use Illuminate\Http\Request;
+use App\Http\Requests\CategoriaRequest;
 
 class CategoriaController extends Controller
 {
@@ -18,12 +19,9 @@ class CategoriaController extends Controller
         return view('categorias.create');
     }
 
-    public function store(Request $request)
+    public function store(CategoriaRequest $request)
     {
-        $validated = $request->validate([
-            'nome' => 'required|string|max:255',
-            'descricao' => 'nullable|string',
-        ]);
+        $validated = $request->validated();
 
         Categoria::create($validated);
 
@@ -35,12 +33,9 @@ class CategoriaController extends Controller
         return view('categorias.edit', compact('categoria'));
     }
 
-    public function update(Request $request, Categoria $categoria)
+    public function update(CategoriaRequest $request, Categoria $categoria)
     {
-        $validated = $request->validate([
-            'nome' => 'required|string|max:255',
-            'descricao' => 'nullable|string',
-        ]);
+        $validated = $request->validated();
 
         $categoria->update($validated);
 
