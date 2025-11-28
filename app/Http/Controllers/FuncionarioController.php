@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Funcionario;
 use Illuminate\Http\Request;
+use App\Http\Requests\FuncionarioRequest;
 
 class FuncionarioController extends Controller
 {
@@ -18,14 +19,9 @@ class FuncionarioController extends Controller
         return view('funcionarios.create');
     }
 
-    public function store(Request $request)
+    public function store(FuncionarioRequest $request)
     {
-        $validated = $request->validate([
-            'nome' => 'required|string|max:255',
-            'email' => 'required|email',
-            'telefone' => 'required|string|max:20',
-            'cargo' => 'required|string|max:255',
-        ]);
+        $validated = $request->validated();
 
         Funcionario::create($validated);
 
@@ -37,14 +33,9 @@ class FuncionarioController extends Controller
         return view('funcionarios.edit', compact('funcionario'));
     }
 
-    public function update(Request $request, Funcionario $funcionario)
+    public function update(FuncionarioRequest $request, Funcionario $funcionario)
     {
-        $validated = $request->validate([
-            'nome' => 'required|string|max:255',
-            'email' => 'required|email',
-            'telefone' => 'required|string|max:20',
-            'cargo' => 'required|string|max:255',
-        ]);
+        $validated = $request->validated();
 
         $funcionario->update($validated);
 
