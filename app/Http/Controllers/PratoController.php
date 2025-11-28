@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Prato;
 use App\Models\Categoria;
 use Illuminate\Http\Request;
+use App\Http\Requests\PratoRequest;
 
 class PratoController extends Controller
 {
@@ -20,15 +21,9 @@ class PratoController extends Controller
         return view('pratos.create', compact('categorias'));
     }
 
-    public function store(Request $request)
+    public function store(PratoRequest $request)
     {
-        $validated = $request->validate([
-            'nome' => 'required|string|max:255',
-            'descricao' => 'nullable|string',
-            'preco' => 'required|numeric',
-            'imagem' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
-            'categoria_id' => 'required|exists:categorias,id',
-        ]);
+        $validated = $request->validated();
 
         if ($request->hasFile('imagem')) {
             $path = $request->file('imagem')->store('pratos', 'public');
@@ -46,15 +41,9 @@ class PratoController extends Controller
         return view('pratos.edit', compact('prato', 'categorias'));
     }
 
-    public function update(Request $request, Prato $prato)
+    public function update(PratoRequest $request, Prato $prato)
     {
-        $validated = $request->validate([
-            'nome' => 'required|string|max:255',
-            'descricao' => 'nullable|string',
-            'preco' => 'required|numeric',
-            'imagem' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
-            'categoria_id' => 'required|exists:categorias,id',
-        ]);
+        $validated = $request->validated();
 
         if ($request->hasFile('imagem')) {
             if ($prato->imagem && \Storage::disk('public')->exists($prato->imagem)) {
@@ -63,7 +52,7 @@ class PratoController extends Controller
 
             $path = $request->file('imagem')->store('pratos', 'public');
             $validated['imagem'] = $path;
-    }
+        }
 
         $prato->update($validated);
 
