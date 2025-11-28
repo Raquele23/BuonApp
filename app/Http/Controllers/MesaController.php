@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Mesa;
 use Illuminate\Http\Request;
+use App\Http\Requests\MesaRequest;
 
 class MesaController extends Controller
 {
@@ -18,15 +19,9 @@ class MesaController extends Controller
         return view('mesas.create');
     }
 
-    public function store(Request $request)
+    public function store(MesaRequest $request)
     {
-        $validated = $request->validate([
-            'numero' => 'required|integer|unique:mesas,numero',
-            'capacidade' => 'required|integer',
-            'status' => 'required|string|max:255',
-        ], [
-            'numero.unique' => 'Já existe uma mesa com esse número.',
-        ]);
+        $validated = $request->validated();
 
         Mesa::create($validated);
 
@@ -38,15 +33,9 @@ class MesaController extends Controller
         return view('mesas.edit', compact('mesa'));
     }
 
-    public function update(Request $request, Mesa $mesa)
+    public function update(MesaRequest $request, Mesa $mesa)
     {
-        $validated = $request->validate([
-            'numero' => 'required|integer|unique:mesas,numero,' . $mesa->id,
-            'capacidade' => 'required|integer',
-            'status' => 'required|string|max:255',
-        ], [
-            'numero.unique' => 'Já existe uma mesa com esse número.',
-        ]);
+        $validated = $request->validate();
 
         $mesa->update($validated);
 
