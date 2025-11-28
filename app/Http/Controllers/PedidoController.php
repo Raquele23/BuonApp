@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Pedido;
 use App\Models\Mesa;
 use App\Models\Prato;
+use App\Models\Pedido;
 use Illuminate\Http\Request;
+use App\Http\Requests\PedidoRequest;
 
 class PedidoController extends Controller
 {
@@ -22,24 +23,19 @@ class PedidoController extends Controller
         return view('pedidos.create', compact('mesas', 'pratos'));
     }
 
-    public function store(Request $request)
+    public function store(PedidoRequest $request)
     {
-        $validated = $request->validate([
-            'mesa_id' => 'required|exists:mesas,id',
-            'pratos' => 'required|array',
-            'pratos.*' => 'exists:pratos,id',
-            'quantidades' => 'required|array',
-        ]);
+        $validated = $request->validated();
 
         $pedido = Pedido::create([
-            'mesa_id' => $request->mesa_id,
+            'mesa_id' => $validated['mesa_id'],
             'status' => 'em andamento',
             'total' => 0,
         ]);
 
         $total = 0;
-        foreach ($request->pratos as $pratoId) {
-            $quantidade = $request->quantidades[$pratoId];
+        foreach ($validated['pratos'] as $pratoId) {
+            $quantidade = $validated['quantidades'][$pratoId];
             $prato = Prato::find($pratoId);
 
             $pedido->pratos()->attach($pratoId, ['quantidade' => $quantidade]);
@@ -60,26 +56,20 @@ class PedidoController extends Controller
         return view('pedidos.edit', compact('pedido', 'mesas', 'pratos'));
     }
 
-    public function update(Request $request, Pedido $pedido)
+    public function update(PedidoRequest $request, Pedido $pedido)
     {
-        $validated = $request->validate([
-            'mesa_id' => 'required|exists:mesas,id',
-            'pratos' => 'required|array',
-            'pratos.*' => 'exists:pratos,id',
-            'quantidades' => 'required|array',
-            'status' => 'required|string',
-        ]);
+        $validated = $request->validated();
 
         $pedido->update([
-            'mesa_id' => $request->mesa_id,
-            'status' => $request->status,
+            'mesa_id' => $validated->mesa_id,
+            'status' => $validated->status,
         ]);
 
         $pedido->pratos()->detach();
 
         $total = 0;
-        foreach ($request->pratos as $pratoId) {
-            $quantidade = $request->quantidades[$pratoId];
+        foreach ($validated['pratos'] as $pratoId) {
+            $quantidade = $validated['quantidades'][$pratoId];
             $prato = Prato::find($pratoId);
 
             $pedido->pratos()->attach($pratoId, ['quantidade' => $quantidade]);
