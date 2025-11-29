@@ -17,12 +17,20 @@
 
                     <div class="mb-4">
                         <label class="block text-gray-700 dark:text-gray-300 font-semibold">Nome:</label>
-                        <input type="text" name="nome" value="{{ old('nome') }}" required class="w-full mt-1 p-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-200 border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-green-600 dark:focus:ring-green-500">
+                        <input type="text" name="nome" value="{{ old('nome') }}" placeholder="Ex: Massas Artesanais" required class="w-full mt-1 p-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-200 border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-green-600 dark:focus:ring-green-500">
+                        
+                        @error('nome')
+                            <p class="mt-1 ml-1 text-sm text-red-600 dark:text-red-400"> {{ $message }} </p>
+                        @enderror
                     </div>
 
                     <div class="mb-4">
                         <label class="block text-gray-700 dark:text-gray-300 font-semibold">Descrição:</label>
-                        <textarea name="descricao"class="w-full mt-1 p-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-200 border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-green-600 dark:focus:ring-green-500" rows="4">{{ old('descricao') }}</textarea>
+                        <textarea name="descricao" placeholder="Descreva o tipo de pratos dessa categoria... Ex: Pratos leves preparados com ingredientes frescos." class="w-full mt-1 p-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-200 border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-green-600 dark:focus:ring-green-500" rows="4">{{ old('descricao') }}</textarea>
+
+                        @error('descricao')
+                            <p class="mt-1 ml-1 text-sm text-red-600 dark:text-red-400"> {{ $message }} </p>
+                        @enderror
                     </div>
 
                     <div class="flex justify-between mt-6">
