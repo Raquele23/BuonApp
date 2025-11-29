@@ -40,21 +40,22 @@
                                 <td class="px-4 py-3 text-gray-900 dark:text-gray-100">
                                     {{ $categoria->nome }}
                                 </td>
-                                <td class="px-4 py-3 text-gray-700 dark:text-gray-300">
+                                <td class="px-4 py-3 text-gray-700 dark:text-gray-300 max-w-lg">
                                     {{ $categoria->descricao }}
                                 </td>
-                                <td class="px-4 py-3 text-center space-x-2">
+                                <td class="px-4 py-3 text-center">
+                                    <div class="flex flex-col sm:flex-row justify-center gap-2">
+                                        <a href="{{ route('categorias.edit', $categoria->id) }}" class="bg-green-500 dark:bg-green-600 hover:bg-green-600 dark:hover:bg-green-700 text-white px-3 py-1 rounded w-full sm:w-auto text-center">
+                                            Editar
+                                        </a>
 
-                                    <a href="{{ route('categorias.edit', $categoria->id) }}" class="bg-green-500 dark:bg-green-600 hover:bg-green-600 dark:hover:bg-green-700 text-white px-3 py-1 rounded">
-                                        Editar
-                                    </a>
+                                        <form action="{{ route('categorias.destroy', $categoria->id) }}" method="POST" class="w-full sm:w-auto" onsubmit="return confirm('Tem certeza que deseja excluir?')">
+                                            @csrf
+                                            @method('DELETE')
 
-                                    <form action="{{ route('categorias.destroy', $categoria->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Tem certeza que deseja excluir?')">
-                                        @csrf
-                                        @method('DELETE')
-
-                                        <button type="submit" class="bg-red-600 dark:bg-red-700 hover:bg-red-700 dark:hover:bg-red-800 text-white px-3 py-1 rounded"> Excluir </button>
-                                    </form>
+                                            <button type="submit" class="bg-red-600 dark:bg-red-700 hover:bg-red-700 dark:hover:bg-red-800 text-white px-3 py-1 rounded w-full sm:w-auto"> Excluir </button>
+                                        </form>
+                                    </div>
                                 </td>
                             </tr>
                             @endforeach
