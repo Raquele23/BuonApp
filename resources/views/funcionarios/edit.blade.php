@@ -10,38 +10,40 @@
 
                 <h1 class="text-2xl font-bold text-green-700 dark:text-green-400 mb-6">Alterar dados do Funcionário</h1>
 
-                @if ($errors->any())
-                    <div class="mb-4 p-4 bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-300 border-l-4 border-red-600 dark:border-red-500 rounded">
-                        <ul class="list-disc ml-6">
-                            @foreach ($errors->all() as $erro)
-                                <li>{{ $erro }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
-
                 <form action="{{ route('funcionarios.update', $funcionario->id) }}" method="POST" class="space-y-6">
                     @csrf
                     @method('PUT')
 
                     <div>
                         <label class="block font-semibold text-gray-700 dark:text-gray-200">Nome:</label>
-                        <input type="text" name="nome" value="{{ old('nome', $funcionario->nome) }}" required class="w-full mt-1 px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 border border-gray-300 dark:border-gray-600 focus:ring-green-600 focus:border-green-600">
+                        <input type="text" name="nome" value="{{ old('nome', $funcionario->nome) }}" placeholder="Digite o nome completo" class="w-full mt-1 px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 border border-gray-300 dark:border-gray-600 focus:ring-green-600 focus:border-green-600">
+
+                        @error('nome')
+                            <p class="mt-1 ml-1 text-sm text-red-600 dark:text-red-400"> {{ $message }} </p>
+                        @enderror
                     </div>
 
                     <div>
                         <label class="block font-semibold text-gray-700 dark:text-gray-200">Email:</label>
-                        <input type="email" name="email" value="{{ old('email', $funcionario->email) }}" required class="w-full mt-1 px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-700  text-gray-900 dark:text-gray-100 border border-gray-300 dark:border-gray-600 focus:ring-green-600 focus:border-green-600">
+                        <input type="email" name="email" value="{{ old('email', $funcionario->email) }}" placeholder="analaura@gmail.com" class="w-full mt-1 px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-700  text-gray-900 dark:text-gray-100 border border-gray-300 dark:border-gray-600 focus:ring-green-600 focus:border-green-600">
+
+                        @error('email')
+                            <p class="mt-1 ml-1 text-sm text-red-600 dark:text-red-400"> {{ $message }} </p>
+                        @enderror
                     </div>
 
                     <div>
                         <label class="block font-semibold text-gray-700 dark:text-gray-200">Telefone:</label>
-                        <input type="text" name="telefone" value="{{ old('telefone', $funcionario->telefone) }}" required class="w-full mt-1 px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 border border-gray-300 dark:border-gray-600 focus:ring-green-600 focus:border-green-600">
+                        <input type="text" name="telefone" value="{{ old('telefone', $funcionario->telefone) }}" placeholder="(00) 00000-0000" class="w-full mt-1 px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 border border-gray-300 dark:border-gray-600 focus:ring-green-600 focus:border-green-600">
+
+                        @error('telefone')
+                            <p class="mt-1 ml-1 text-sm text-red-600 dark:text-red-400"> {{ $message }} </p>
+                        @enderror
                     </div>
 
                     <div>
                         <label class="block font-semibold text-gray-700 dark:text-gray-200">Cargo:</label>
-                        <select name="cargo" required class="w-full mt-1 px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 border border-gray-300 dark:border-gray-600 focus:ring-green-600 focus:border-green-600">
+                        <select name="cargo"  class="w-full mt-1 px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 border border-gray-300 dark:border-gray-600 focus:ring-green-600 focus:border-green-600">
                             <option value="">Selecione o cargo</option>
                             <option value="Chef de Cozinha" {{ old('cargo', $funcionario->cargo) == 'Chef de Cozinha' ? 'selected' : '' }}>Chef de Cozinha</option>
                             <option value="Cozinheiro" {{ old('cargo', $funcionario->cargo) == 'Cozinheiro' ? 'selected' : '' }}>Cozinheiro</option>
@@ -51,6 +53,10 @@
                             <option value="Gerente" {{ old('cargo', $funcionario->cargo) == 'Gerente' ? 'selected' : '' }}>Gerente</option>
                             <option value="Atendente" {{ old('cargo', $funcionario->cargo) == 'Atendente' ? 'selected' : '' }}>Atendente</option>
                         </select>
+
+                        @error('cargo')
+                            <p class="mt-1 ml-1 text-sm text-red-600 dark:text-red-400"> {{ $message }} </p>
+                        @enderror
                     </div>
 
                     <div class="flex justify-between pt-4">

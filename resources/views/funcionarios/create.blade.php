@@ -10,32 +10,34 @@
 
                 <h1 class="text-2xl font-bold text-green-700 dark:text-green-400 mb-6">Novo Funcionário</h1>
 
-                @if ($errors->any())
-                    <div class="mb-4 p-4 bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-300 border-l-4 border-red-600 dark:border-red-500 rounded">
-                        <ul class="list-disc ml-6">
-                            @foreach ($errors->all() as $erro)
-                                <li>{{ $erro }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
-
                 <form action="{{ route('funcionarios.store') }}" method="POST" class="space-y-6">
                     @csrf
 
                     <div>
                         <label class="block font-semibold text-gray-700 dark:text-gray-200">Nome:</label>
-                        <input type="text" name="nome" value="{{ old('nome') }}" required class="w-full mt-1 px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 border border-gray-300 dark:border-gray-600 focus:ring-green-600 focus:border-green-600">
+                        <input type="text" name="nome" value="{{ old('nome') }}" placeholder="Digite o nome completo" required class="w-full mt-1 px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 border border-gray-300 dark:border-gray-600 focus:ring-green-600 focus:border-green-600">
+
+                        @error('nome')
+                            <p class="mt-1 ml-1 text-sm text-red-600 dark:text-red-400"> {{ $message }} </p>
+                        @enderror
                     </div>
 
                     <div>
                         <label class="block font-semibold text-gray-700 dark:text-gray-200">Email:</label>
-                        <input type="email" name="email" value="{{ old('email') }}" required class="w-full mt-1 px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 border border-gray-300 dark:border-gray-600 focus:ring-green-600 focus:border-green-600">
+                        <input type="email" name="email" value="{{ old('email') }}" placeholder="analaura@gmail.com" required class="w-full mt-1 px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 border border-gray-300 dark:border-gray-600 focus:ring-green-600 focus:border-green-600">
+
+                        @error('email')
+                            <p class="mt-1 ml-1 text-sm text-red-600 dark:text-red-400"> {{ $message }} </p>
+                        @enderror
                     </div>
 
                     <div>
                         <label class="block font-semibold text-gray-700 dark:text-gray-200">Telefone:</label>
-                        <input type="text" name="telefone" value="{{ old('telefone') }}" required class="w-full mt-1 px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 border border-gray-300 dark:border-gray-600 focus:ring-green-600 focus:border-green-600">
+                        <input type="text" name="telefone" value="{{ old('telefone') }}" placeholder="(00) 00000-0000" required class="w-full mt-1 px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 border border-gray-300 dark:border-gray-600 focus:ring-green-600 focus:border-green-600">
+
+                        @error('telefone')
+                            <p class="mt-1 ml-1 text-sm text-red-600 dark:text-red-400"> {{ $message }} </p>
+                        @enderror
                     </div>
 
                     <div>
@@ -50,6 +52,10 @@
                             <option value="Gerente" {{ old('cargo') == 'Gerente' ? 'selected' : '' }}>Gerente</option>
                             <option value="Atendente" {{ old('cargo') == 'Atendente' ? 'selected' : '' }}>Atendente</option>
                         </select>
+
+                        @error('cargo')
+                            <p class="mt-1 ml-1 text-sm text-red-600 dark:text-red-400"> {{ $message }} </p>
+                        @enderror
                     </div>
 
                     <div class="flex justify-between pt-4">
