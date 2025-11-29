@@ -10,27 +10,25 @@
 
                 <h1 class="text-2xl font-bold text-green-700 dark:text-green-400 mb-6">Nova Mesa</h1>
 
-                @if ($errors->any())
-                    <div class="mb-4 p-4 bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-300 border-l-4 border-red-600 dark:border-red-500 rounded">
-                        <ul class="list-disc ml-6">
-                            @foreach ($errors->all() as $erro)
-                                <li>{{ $erro }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
-
                 <form action="{{ route('mesas.store') }}" method="POST" class="space-y-6">
                     @csrf
 
                     <div>
                         <label class="block font-semibold text-gray-700 dark:text-gray-200">Número da mesa:</label>
-                        <input type="number" name="numero" value="{{ old('numero') }}" required class="w-full mt-1 px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 border border-gray-300 dark:border-gray-600 focus:ring-green-600 focus:border-green-600">
+                        <input type="number" name="numero" value="{{ old('numero') }}" placeholder="Ex: 12" required class="w-full mt-1 px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 border border-gray-300 dark:border-gray-600 focus:ring-green-600 focus:border-green-600">
+
+                        @error('numero')
+                            <p class="mt-1 ml-1 text-sm text-red-600 dark:text-red-400"> {{ $message }} </p>
+                        @enderror
                     </div>
 
                     <div>
-                        <label class="block font-semibold text-gray-700 dark:text-gray-200">Capacidade:</label>
-                        <input type="number" name="capacidade" value="{{ old('capacidade') }}" required class="w-full mt-1 px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 border border-gray-300 dark:border-gray-600 focus:ring-green-600 focus:border-green-600">
+                        <label class="block font-semibold text-gray-700 dark:text-gray-200">Capacidade de pessoas:</label>
+                        <input type="number" name="capacidade" value="{{ old('capacidade') }}" placeholder="Ex: 4 pessoas" required class="w-full mt-1 px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 border border-gray-300 dark:border-gray-600 focus:ring-green-600 focus:border-green-600">
+
+                        @error('capacidade')
+                            <p class="mt-1 ml-1 text-sm text-red-600 dark:text-red-400"> {{ $message }} </p>
+                        @enderror
                     </div>
 
                     <div>
@@ -41,6 +39,10 @@
                             <option value="Ocupada" {{ old('status') == 'Ocupada' ? 'selected' : '' }}>Ocupada</option>
                             <option value="Reservada" {{ old('status') == 'Reservada' ? 'selected' : '' }}>Reservada</option>
                         </select>
+
+                        @error('status')
+                            <p class="mt-1 ml-1 text-sm text-red-600 dark:text-red-400"> {{ $message }} </p>
+                        @enderror
                     </div>
 
                     <div class="flex justify-between pt-4">
