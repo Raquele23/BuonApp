@@ -19,12 +19,12 @@
                 @endif
 
                 <div class="overflow-x-auto">
-                    <table class="w-full border-collapse bg-white dark:bg-gray-800 shadow-md dark:shadow-lg rounded-lg overflow-hidden">
+                    <table class="table-fixed w-full border-collapse bg-white dark:bg-gray-800 shadow-md dark:shadow-lg rounded-lg overflow-hidden">
                         <thead class="bg-red-600 dark:bg-red-700 text-white">
                             <tr>
-                                <th class="px-4 py-3 text-left">Número da Mesa</th>
+                                <th class="px-4 py-3 text-left whitespace-nowrap align-middle">Número da Mesa</th>
                                 <th class="px-4 py-3 text-left">Capacidade</th>
-                                <th class="px-4 py-3 text-left">Status</th>
+                                <th class="px-9 py-3 text-left">Status</th>
                                 <th class="px-4 py-3 text-center">Ações</th>
                             </tr>
                         </thead>
@@ -45,19 +45,22 @@
                                         ];
                                     @endphp
 
-                                    <span class="px-3 py-1 rounded-lg text-sm font-semibold {{ $statusClasses[$mesa->status] ?? 'bg-gray-300 dark:bg-gray-600 text-gray-800 dark:text-gray-200' }}">{{ $mesa->status }}</span>
+                                    <span class="inline-flex items-center justify-center min-w-[90px] px-3 py-1 rounded-lg text-sm font-semibold {{ $statusClasses[$mesa->status] ?? 'bg-gray-300 dark:bg-gray-600 text-gray-800 dark:text-gray-200' }}">{{ $mesa->status }}</span>
                                 </td>
 
-                                <td class="px-4 py-3 text-center space-x-2">
+                                <td class="px-4 py-3 text-center">
+                                    <div class="flex flex-col sm:flex-row justify-center gap-2">
+                                        <a href="{{ route('mesas.edit', $mesa->id) }}" class="bg-green-500 dark:bg-green-600 hover:bg-green-600 dark:hover:bg-green-700 text-white px-3 py-1 rounded w-full sm:w-auto text-center">
+                                            Editar
+                                        </a>
 
-                                    <a href="{{ route('mesas.edit', $mesa->id) }}" class="bg-green-500 dark:bg-green-600 hover:bg-green-600 dark:hover:bg-green-700 text-white px-3 py-1 rounded transition">Editar</a>
+                                        <form action="{{ route('mesas.destroy', $mesa->id) }}" method="POST" class="w-full sm:w-auto" onsubmit="return confirm('Tem certeza que deseja excluir?')">
+                                            @csrf
+                                            @method('DELETE')
 
-                                    <form action="{{ route('mesas.destroy', $mesa->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Tem certeza que deseja excluir?')">
-                                        @csrf
-                                        @method('DELETE')
-
-                                        <button type="submit" class="bg-red-600 dark:bg-red-700 hover:bg-red-700 dark:hover:bg-red-800 text-white px-3 py-1 rounded transition">Deletar</button>
-                                    </form>
+                                            <button type="submit" class="bg-red-600 dark:bg-red-700 hover:bg-red-700 dark:hover:bg-red-800 text-white px-3 py-1 rounded w-full sm:w-auto"> Excluir </button>
+                                        </form>
+                                    </div>
                                 </td>
                             </tr>
                             @endforeach
