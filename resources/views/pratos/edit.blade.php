@@ -10,33 +10,35 @@
 
                 <h1 class="text-2xl font-bold text-green-700 dark:text-green-400 mb-6">Editar Prato</h1>
 
-                @if ($errors->any())
-                    <div class="mb-4 p-4 bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-300 border-l-4 border-red-600 dark:border-red-500 rounded">
-                        <ul class="list-disc ml-6">
-                            @foreach ($errors->all() as $erro)
-                                <li>{{ $erro }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
-
                 <form action="{{ route('pratos.update', $prato->id) }}" method="POST" enctype="multipart/form-data" class="space-y-6">
                     @csrf
                     @method('PUT')
 
                     <div>
                         <label class="block font-semibold text-gray-700 dark:text-gray-200">Nome:</label>
-                        <input type="text" name="nome" value="{{ old('nome', $prato->nome) }}" required class="w-full px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 border border-gray-300 dark:border-gray-600 focus:ring-green-600 focus:border-green-600">
+                        <input type="text" name="nome" value="{{ old('nome', $prato->nome) }}" placeholder="Ex: Lasanha Bolonhesa" required class="w-full px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 border border-gray-300 dark:border-gray-600 focus:ring-green-600 focus:border-green-600">
+
+                        @error('nome')
+                            <p class="mt-1 ml-1 text-sm text-red-600 dark:text-red-400"> {{ $message }} </p>
+                        @enderror
                     </div>
 
                     <div>
                         <label class="block font-semibold text-gray-700 dark:text-gray-200">Descrição:<label>
-                        <textarea name="descricao" rows="4" class="w-full px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 border border-gray-300 dark:border-gray-600 focus:ring-green-600 focus:border-green-600">{{ old('descricao', $prato->descricao) }}</textarea>
+                        <textarea name="descricao" rows="4" placeholder="Ex: Camadas de massa fresca, molho à bolonhesa, bechamel e queijo parmesão" class="w-full px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 border border-gray-300 dark:border-gray-600 focus:ring-green-600 focus:border-green-600">{{ old('descricao', $prato->descricao) }}</textarea>
+
+                        @error('descricao')
+                            <p class="mt-1 ml-1 text-sm text-red-600 dark:text-red-400"> {{ $message }} </p>
+                        @enderror
                     </div>
 
                     <div>
                         <label class="block font-semibold text-gray-700 dark:text-gray-200">Preço:</label>
-                        <input type="number" step="0.01" name="preco" value="{{ old('preco', $prato->preco) }}" required class="w-full px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 border border-gray-300 dark:border-gray-600 focus:ring-green-600 focus:border-green-600">
+                        <input type="number" step="0.01" name="preco" value="{{ old('preco', $prato->preco) }}" placeholder="Ex: 32.50" required class="w-full px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 border border-gray-300 dark:border-gray-600 focus:ring-green-600 focus:border-green-600">
+
+                        @error('preco')
+                            <p class="mt-1 ml-1 text-sm text-red-600 dark:text-red-400"> {{ $message }} </p>
+                        @enderror
                     </div>
 
                     <div>
@@ -50,11 +52,19 @@
                                 </option>
                             @endforeach
                         </select>
+
+                        @error('categoria_id')
+                            <p class="mt-1 ml-1 text-sm text-red-600 dark:text-red-400"> {{ $message }} </p>
+                        @enderror
                     </div>
 
                     <div>
                         <label class="block font-semibold text-gray-700 dark:text-gray-200">Nova imagem:</label>
                         <input type="file" name="imagem" accept="image/*" class="w-full px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-200 border border-gray-300 dark:border-gray-600">
+
+                        @error('imagem')
+                            <p class="mt-1 ml-1 text-sm text-red-600 dark:text-red-400"> {{ $message }} </p>
+                        @enderror
                     </div>
 
                     @if ($prato->imagem)
