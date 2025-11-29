@@ -61,8 +61,8 @@ class PedidoController extends Controller
         $validated = $request->validated();
 
         $pedido->update([
-            'mesa_id' => $validated->mesa_id,
-            'status' => $validated->status,
+            'mesa_id' => $validated['mesa_id'],
+            'status' => $validated['status'],
         ]);
 
         $pedido->pratos()->detach();
