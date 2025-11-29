@@ -10,16 +10,6 @@
 
                 <h1 class="text-2xl font-bold text-green-700 dark:text-green-400 mb-6">Criar Pedido</h1>
 
-                @if ($errors->any())
-                    <div class="mb-4 p-4 bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-300 border-l-4 border-red-600 dark:border-red-500 rounded">
-                        <ul class="list-disc ml-6">
-                            @foreach ($errors->all() as $erro)
-                                <li>{{ $erro }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
-
                 <form action="{{ route('pedidos.store') }}" method="POST" class="space-y-6">
                     @csrf
 
@@ -33,6 +23,10 @@
                                 </option>
                             @endforeach
                         </select>
+
+                        @error('mesa_id')
+                            <p class="mt-1 ml-1 text-sm text-red-600 dark:text-red-400"> {{ $message }} </p>
+                        @enderror
                     </div>
 
                     <div>
@@ -51,6 +45,14 @@
                                 </div>
                             </div>
                         @endforeach
+
+                        @error('pratos')
+                            <p class="mt-1 ml-1 text-sm text-red-600 dark:text-red-400"> {{ $message }} </p>
+                        @enderror
+
+                        @error('quantidades')
+                            <p class="mt-1 ml-1 text-sm text-red-600 dark:text-red-400"> {{ $message }} </p>
+                        @enderror
                     </div>
 
                     <div class="flex justify-between pt-4">
