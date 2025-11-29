@@ -26,9 +26,9 @@
                             <tr>
                                 <th class="px-4 py-3 text-left">ID</th>
                                 <th class="px-4 py-3 text-left">Mesa</th>
-                                <th class="px-4 py-3 text-left">Status</th>
                                 <th class="px-4 py-3 text-left">Total</th>
                                 <th class="px-4 py-3 text-left">Pratos</th>
+                                <th class="px-12 py-3 text-left">Status</th>
                                 <th class="px-4 py-3 text-center">Ações</th>
                             </tr>
                         </thead>
@@ -39,9 +39,22 @@
 
                                 <td class="px-4 py-3 text-gray-900 dark:text-gray-100">{{ $pedido->id }}</td>
 
-                                <td class="px-4 py-3 text-gray-700 dark:text-gray-300">Mesa {{ $pedido->mesa->numero }}</td>
+                                <td class="px-4 py-3 text-left whitespace-nowrap align-middle text-gray-700 dark:text-gray-300">Mesa {{ $pedido->mesa->numero }}</td>
 
-                                <td class="px-4 py-3">
+                                <td class="px-4 py-3 text-left whitespace-nowrap align-middle text-gray-700 dark:text-gray-300">
+                                    R$ {{ number_format($pedido->total, 2, ',', '.') }}
+                                </td>
+
+                                <td class="px-4 py-3 text-left whitespace-nowrap align-middle text-gray-700 dark:text-gray-300">
+                                    @foreach($pedido->pratos as $prato)
+                                        <div>
+                                            {{ $prato->nome }} 
+                                            <span class="text-sm text-gray-500 dark:text-gray-400">({{ $prato->pivot->quantidade }}x)</span>
+                                        </div>
+                                    @endforeach
+                                </td>
+
+                                <td class="px-4 py-3 text-left whitespace-nowrap align-middle">
                                     @php
                                         $statusClasses = [
                                             'em andamento'   => 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300',
@@ -50,33 +63,22 @@
                                         ];
                                     @endphp
 
-                                    <span class="px-3 py-1 rounded-lg text-sm font-semibold {{ $statusClasses[$pedido->status] ?? 'bg-gray-300 dark:bg-gray-600 text-gray-800 dark:text-gray-200' }}">{{ ucfirst($pedido->status) }}</span>
+                                    <span class="px-3 py-1 rounded-lg text-sm font-semibold inline-block min-w-[120px] text-center {{ $statusClasses[$pedido->status] ?? 'bg-gray-300 dark:bg-gray-600 text-gray-800 dark:text-gray-200' }}">{{ ucfirst($pedido->status) }}</span>
                                 </td>
 
-                                <td class="px-4 py-3 text-gray-700 dark:text-gray-300">
-                                    R$ {{ number_format($pedido->total, 2, ',', '.') }}
-                                </td>
+                                <td class="px-4 py-3 text-center">
+                                    <div class="flex flex-col sm:flex-row justify-center gap-2">
+                                        <a href="{{ route('pedidos.edit', $pedido->id) }}" class="bg-green-500 dark:bg-green-600 hover:bg-green-600 dark:hover:bg-green-700 text-white px-3 py-1 rounded w-full sm:w-auto text-center">
+                                            Editar
+                                        </a>
 
-                                <td class="px-4 py-3 text-gray-700 dark:text-gray-300">
-                                    <ul class="list-disc pl-4">
-                                        @foreach($pedido->pratos as $prato)
-                                            <li>
-                                                {{ $prato->nome }} 
-                                                <span class="text-sm text-gray-500 dark:text-gray-400">({{ $prato->pivot->quantidade }}x)</span>
-                                            </li>
-                                        @endforeach
-                                    </ul>
-                                </td>
+                                        <form action="{{ route('pedidos.destroy', $pedido->id) }}" method="POST" class="w-full sm:w-auto" onsubmit="return confirm('Tem certeza que deseja excluir?')">
+                                            @csrf
+                                            @method('DELETE')
 
-                                <td class="px-4 py-3 text-center space-x-2">
-                                    <a href="{{ route('pedidos.edit', $pedido->id) }}" class="bg-green-500 dark:bg-green-600 hover:bg-green-600 dark:hover:bg-green-700 text-white px-3 py-1 rounded transition">Editar</a>
-
-                                    <form action="{{ route('pedidos.destroy', $pedido->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Tem certeza que deseja excluir este pedido?')">
-                                        @csrf
-                                        @method('DELETE')
-
-                                        <button type="submit"class="bg-red-600 dark:bg-red-700 hover:bg-red-700 dark:hover:bg-red-800 text-white px-3 py-1 rounded transition">Excluir</button>
-                                    </form>
+                                            <button type="submit" class="bg-red-600 dark:bg-red-700 hover:bg-red-700 dark:hover:bg-red-800 text-white px-3 py-1 rounded w-full sm:w-auto"> Excluir </button>
+                                        </form>
+                                    </div>
                                 </td>
                             </tr>
                             @endforeach
