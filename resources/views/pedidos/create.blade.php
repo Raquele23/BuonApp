@@ -44,15 +44,17 @@
                                     <input type="number" name="quantidades[{{ $prato->id }}]" value="{{ old('quantidades.'.$prato->id, 1) }}" min="1" class="w-20 px-2 py-1 rounded-lg bg-gray-200 dark:bg-gray-600 text-gray-900 dark:text-gray-100 border border-gray-300 dark:border-gray-500">
                                 </div>
                             </div>
+
+                            @error('quantidades.'.$prato->id)
+                                <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
+                            @enderror
                         @endforeach
 
                         @error('pratos')
                             <p class="mt-1 ml-1 text-sm text-red-600 dark:text-red-400"> {{ $message }} </p>
                         @enderror
 
-                        @error('quantidades.'.$prato->id)
-                            <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
-                        @enderror
+                        
 
                         @error('quantidades')
                             <p class="mt-1 ml-1 text-sm text-red-600 dark:text-red-400"> {{ $message }} </p>
