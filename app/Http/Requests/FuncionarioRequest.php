@@ -22,10 +22,19 @@ class FuncionarioRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nome' => 'required|string|max:50',
-            'email' => 'required|email|max:100',
-            'telefone' => 'required|string|max:20',
+            'nome' => 'required|string|max:50|regex:/^[A-Za-zÀ-ÖØ-öø-ÿ\s]+$/',
+            'email' => 'required|email:rfc,dns|max:100',
+            'telefone' => 'required|string|max:20|regex:/^\(?\d{2}\)?\s?\d{4,5}-?\d{4}$/',
             'cargo' => 'required|string|max:255',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'nome.regex' => 'O nome deve conter apenas letras e espaços.',
+            'email.dns' => 'O domínio deste e-mail não existe. Verifique e tente novamente.',
+            'telefone.regex' => 'Informe um número de telefone válido com DDD.',
         ];
     }
 }
