@@ -37,7 +37,7 @@
                             <tr class="border-b border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 transition">
                                 <td class="px-4 py-3 text-gray-900 dark:text-gray-100">{{ $funcionario->nome }}</td>
                                 <td class="px-4 py-3 text-gray-700 dark:text-gray-300">{{ $funcionario->email }}</td>
-                                <td class="px-4 py-3 text-gray-700 dark:text-gray-300">{{ $funcionario->telefone }}</td>
+                                <td class="px-4 py-3 text-gray-700 dark:text-gray-300 whitespace-nowrap">{{ $funcionario->telefone }}</td>
                                 <td class="px-4 py-3 text-gray-700 dark:text-gray-300">{{ $funcionario->cargo }}</td>
 
                                 <td class="px-4 py-3 text-center space-x-2">
