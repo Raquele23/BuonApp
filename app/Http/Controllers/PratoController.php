@@ -9,10 +9,17 @@ use App\Http\Requests\PratoRequest;
 
 class PratoController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $pratos = Prato::all();
-        return view('pratos.index', compact('pratos'));
+        $categoriaId = $request->query('categoria');
+
+        $pratos = Prato::when($categoriaId, function($query, $categoriaId) {
+            return $query->where('categoria_id', $categoriaId);
+        })->get();
+
+        $categorias = Categoria::all();
+
+        return view('pratos.index', compact('pratos', 'categorias'));
     }
 
     public function create()
