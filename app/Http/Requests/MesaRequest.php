@@ -24,8 +24,8 @@ class MesaRequest extends FormRequest
         $mesaId = $this->route('mesa')?->id;
 
         return [
-            'numero' => 'required|integer|unique:mesas,numero,' . $mesaId,
-            'capacidade' => 'required|integer|min:1',
+            'numero' => 'required|integer|min:1|max:9999|unique:mesas,numero,' . $mesaId,
+            'capacidade' => 'required|integer|min:1|max:50',
             'status' => 'required|string|max:255',
         ];
     }
