@@ -24,7 +24,7 @@ class PratoRequest extends FormRequest
         return [
             'nome' => 'required|string|max:60',
             'descricao' => 'nullable|string|max:150',
-            'preco' => 'required|numeric',
+            'preco' => 'required|numeric|max:999999.99',
             'imagem' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
             'categoria_id' => 'required|exists:categorias,id',
         ];
