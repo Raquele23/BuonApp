@@ -34,20 +34,24 @@
                         @foreach($pratos as $prato)
                             <div class="flex items-center justify-between bg-gray-100 dark:bg-gray-700 p-3 rounded-lg mb-2 border border-gray-300 dark:border-gray-600">
                                 <div>
-                                    <input type="checkbox" name="pratos[]" value="{{ $prato->id }}" id="prato-{{ $prato->id }}" class="mr-2">
+                                    <input type="checkbox" name="pratos[]" value="{{ $prato->id }}" id="prato-{{ $prato->id }}" class="mr-2" {{ in_array($prato->id, old('pratos', [])) ? 'checked' : '' }}>
                                     <label for="prato-{{ $prato->id }}" class="text-gray-900 dark:text-gray-100">
                                         {{ $prato->nome }} - R$ {{ number_format($prato->preco, 2, ',', '.') }}
                                     </label>
                                 </div>
                                 <div>
                                     <label class="sr-only">Quantidade</label>
-                                    <input type="number" name="quantidades[{{ $prato->id }}]" value="1" min="1" class="w-20 px-2 py-1 rounded-lg bg-gray-200 dark:bg-gray-600 text-gray-900 dark:text-gray-100 border border-gray-300 dark:border-gray-500">
+                                    <input type="number" name="quantidades[{{ $prato->id }}]" value="{{ old('quantidades.'.$prato->id, 1) }}" min="1" class="w-20 px-2 py-1 rounded-lg bg-gray-200 dark:bg-gray-600 text-gray-900 dark:text-gray-100 border border-gray-300 dark:border-gray-500">
                                 </div>
                             </div>
                         @endforeach
 
                         @error('pratos')
                             <p class="mt-1 ml-1 text-sm text-red-600 dark:text-red-400"> {{ $message }} </p>
+                        @enderror
+
+                        @error('quantidades.'.$prato->id)
+                            <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
                         @enderror
 
                         @error('quantidades')
