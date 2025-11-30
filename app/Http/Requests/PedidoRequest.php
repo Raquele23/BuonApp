@@ -23,10 +23,11 @@ class PedidoRequest extends FormRequest
     {
         return [
             'mesa_id' => 'required|exists:mesas,id',
-            'pratos' => 'required|array',
-            'pratos.*' => 'exists:pratos,id',
+            'pratos' => 'required|array|min:1',
+            'pratos.*' => 'required|exists:pratos,id',
             'quantidades' => 'required|array',
-            'status' => 'nullable|string'
+            'quantidades.*' => 'required|integer|min:1|max:60',
+            'status' => 'nullable|string|max:255'
         ];
     }
 
@@ -38,6 +39,7 @@ class PedidoRequest extends FormRequest
             'pratos.*.exists' => 'Um dos pratos selecionados não existe.',
 
             'quantidades.array' => 'As quantidades devem ser enviadas em formato de lista.',
+            'quantidades.*.max' => 'A quantidade máxima permitida por prato é 60.',
         ];
     }
 }
