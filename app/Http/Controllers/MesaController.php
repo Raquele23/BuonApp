@@ -10,7 +10,7 @@ class MesaController extends Controller
 {
     public function index()
     {
-        $mesas = Mesa::all();
+        $mesas = Mesa::orderBy('numero', 'asc')->get();
         return view('mesas.index', compact('mesas'));
     }
 
