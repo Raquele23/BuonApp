@@ -35,7 +35,7 @@ class MesaController extends Controller
 
     public function update(MesaRequest $request, Mesa $mesa)
     {
-        $validated = $request->validate();
+        $validated = $request->validated();
 
         $mesa->update($validated);
 
