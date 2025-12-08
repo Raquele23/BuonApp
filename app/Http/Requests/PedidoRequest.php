@@ -34,12 +34,16 @@ class PedidoRequest extends FormRequest
     public function messages(): array
     {
         return [
+            'mesa_id.required' => 'Selecione uma mesa.',
             'mesa_id.exists' => 'A mesa selecionada não existe.',
 
+            'pratos.required' => 'Escolha pelo menos um prato.',
             'pratos.*.exists' => 'Um dos pratos selecionados não existe.',
 
             'quantidades.array' => 'As quantidades devem ser enviadas em formato de lista.',
             'quantidades.*.max' => 'A quantidade máxima permitida por prato é 60.',
+            'quantidades.*.required' => 'Informe a quantidade para o prato selecionado.',
+            'quantidades.*.min' => 'Informe a quantidade para o prato selecionado.',
         ];
     }
 }
