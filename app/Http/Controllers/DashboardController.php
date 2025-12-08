@@ -14,7 +14,7 @@ class DashboardController extends Controller
 
         $mesasOcupadas = Mesa::where('status', 'ocupada')->count();
 
-        $lucroHoje = Pedido::whereDate('created_at', now())->sum('total');
+        $lucroHoje = Pedido::whereDate('created_at', now())->where('status', 'finalizado')->sum('total');
 
         return view('dashboard', compact('pedidosHoje', 'mesasOcupadas', 'lucroHoje'));
     }
