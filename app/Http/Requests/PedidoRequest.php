@@ -21,14 +21,27 @@ class PedidoRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
+        $rules = [
             'mesa_id' => 'required|exists:mesas,id',
+
             'pratos' => 'required|array|min:1',
             'pratos.*' => 'required|exists:pratos,id',
+
             'quantidades' => 'required|array',
-            'quantidades.*' => 'required|integer|min:1|max:60',
-            'status' => 'nullable|string|max:255'
+
+            'quantidades.*' => 'nullable|integer|min:0|max:60',
+
+            'status' => 'nullable|string|max:255',
         ];
+
+        $selecionados = $this->input('pratos', []);
+
+        if (is_array($selecionados)) {
+            foreach ($selecionados as $pratoId) {
+                $rules["quantidades.$pratoId"] = 'required|integer|min:1|max:60';
+            }
+        }
+        return $rules;
     }
 
     public function messages(): array
