@@ -41,7 +41,7 @@
                                 </div>
                                 <div>
                                     <label class="sr-only">Quantidade</label>
-                                    <input type="number" name="quantidades[{{ $prato->id }}]" value="{{ old('quantidades.'.$prato->id, 1) }}" min="1" class="w-20 px-2 py-1 rounded-lg bg-gray-200 dark:bg-gray-600 text-gray-900 dark:text-gray-100 border border-gray-300 dark:border-gray-500">
+                                    <input type="number" name="quantidades[{{ $prato->id }}]" value="{{ old('quantidades.'.$prato->id, '0') }}" min="0" class="w-20 px-2 py-1 rounded-lg bg-gray-200 dark:bg-gray-600 text-gray-900 dark:text-gray-100 border border-gray-300 dark:border-gray-500">
                                 </div>
                             </div>
 
